@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function clicked(e)
+{
+    if(!confirm('Հաստատում եք՞')) {
+        e.preventDefault();
+    }
+}
+</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<meta charset="UTF-8">
+<title>Բոլոր ապռանքատեսկները</title>
+</head>
+<body>
+<form action="/deleteproduct" method="POST">
+<table>
+<thead>
+<tr>
+<td colspan="7" align="center">
+<h1>Բոլոր ապռանքատեսկները</h1>
+</td>
+</tr>
+<tr>
+<td>
+&nbsp;
+</td>
+<td>
+Ապռանքի անվանում
+</td>
+<td>
+Բաղադրություն 1 լ/կգ համար</br>զտած կաթ (լիտր)
+</td>
+<td>
+Բաղադրություն 1 լ/կգ համար</br>յուղ %
+</td>
+<td>
+Տարաի չափը</br>(կգ/լիտր)
+</td>
+<td>
+Տարաի գինը</br>(դրամ)
+</td>
+<td>
+Վաճառքի գին</br>(դրամ)
+</td>
+</tr>
+</thead>
+{% for product in products %}
+<tr>
+<td>
+<input type="checkbox" name="delete" value='{{ product[0] }}' id='{{ product[0] }}'/>
+</td>
+{% for each in product %}
+<td>
+{{ each }}
+</td>
+{% endfor %}
+</tr>
+{% endfor %}
+<tr>
+<td colspan="7">
+<input type="submit" value="Հեռացնել ցանկից" onclick="clicked(event)">
+</td>
+</tr>
+</table>
+</form>
+<a href="/newproduct"><button>Ավելացնել նոր ապռանքատեսակ</button></a>
+</br>
+<a href="/"><button>Վերադառնալ մենյու</button></a>
+</body>
+</html>

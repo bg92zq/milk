@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<meta charset="UTF-8">
+<title>Շահավետ համադրությունը</title>
+</head>
+<body>
+<table>
+<thead>
+<tr>
+<td colspan="2" align="center">
+<h1>Շահավետ համադրությունը</h1>
+</td>
+</tr>
+<tr>
+<td>
+Ապռանքի անվանում
+</td>
+<td>
+Քանակ
+</td>
+</tr>
+</thead>
+{% if result[4] %}
+<tr>
+<td colspan="2">
+<font color="red">Օպտիմազացումը ձախողվեց: Ստուգեք, արդյոք սահմանափակումները հնարավոր են: Բավարար չէ․</font>
+</td>
+</tr>
+{% endif %}
+{% if result[4] %}
+{% for each in result[4] %}
+<tr>
+{% for i in each %}
+<td>
+{% if i == "1" %}
+Կաթ
+{% endif %}
+{% if i == "2" %}
+Յուղ
+{% endif %}
+{% if i != "1" and i != "2" %}
+{{ i }}
+{% endif %}
+</td>
+{% endfor %}
+</tr>
+{% endfor %}
+{% else %}
+{% for each in result[0] %}
+<tr>
+{% for i in each %}
+<td>
+{{ i }}
+</td>
+{% endfor %}
+</tr>
+{% endfor %}
+{% endif %}
+</table>
+<table>
+<thead>
+<tr>
+<td colspan="2" align="center">
+Եկամուտ և մնացորդ
+</td>
+</tr>
+</thead>
+<tr>
+<td>Եկամուտ․</td><td>{{ result[1] }} դրամ</td>
+</tr>
+<tr>
+<td>Զտած կաթի մնացորդ․</td><td>{{ result[2] }} լիտր</td>
+</tr>
+<tr>
+<td>Յուղի մնացորդ․</td><td>{{ result[3] }} լիտր</td>
+</tr>
+</table>
+<form>
+ <input type="button" value="Վերադառնալ հաշվիչ" onclick="history.back()">
+</form>
+</body>
+</html>

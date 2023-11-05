@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function checkAll(o) {
+  var boxes = document.getElementsByTagName("input");
+  for (var x = 0; x < boxes.length; x++) {
+    var obj = boxes[x];
+    if (obj.type == "checkbox") {
+      if (obj.name != "check")
+        obj.checked = o.checked;
+    }
+  }
+}
+</script>
+<script>
+function validateForm() {
+  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  var checkedCount = 0;
+
+  checkboxes.forEach(function(checkbox) {
+    if (checkbox.checked) {
+      checkedCount++;
+    }
+  });
+
+  if (checkedCount === 0) {
+    alert('Ընտրեք առնվազն մեկ ապռանքանիշ');
+    return false;
+  }
+
+  return true;
+}
+</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<meta charset="UTF-8">
+<title>Հաշվարկել շահավետ համադրությունը</title>
+</head>
+<body>
+<form action="/matrix" method="POST" id="productsform" onsubmit="return validateForm()">
+<table>
+<thead>
+<tr>
+<td align="center">
+<h1>Հաշվարկել շահավետ համադրությունը</h1>
+</td>
+</tr>
+</thead>
+<tr>
+<td>
+<table>
+<tr>
+<td align="center" colspan="4">
+Ապռաքատեսակների ընտրություն
+</td>
+</tr>
+<tr>
+<td>
+<input type="checkbox" id="cc" onclick="javascript:checkAll(this)"/>
+</td>
+<td>
+Անվանում
+</td>
+<td>
+Նվազագույն քանակ
+</td>
+<td>
+Առավելագույն քանակ
+</td>
+</tr>
+{% for each in products %}
+<tr>
+<td width="2%">
+<input type="checkbox" name="use" value='{{ each }}' id='{{ each }}'/>
+</td>
+<td>
+{{ each }}
+</td>
+<td>
+<input type="number" name="min-{{ each }}" step="1" placeholder="Min" value=0>
+</td>
+<td>
+<input type="number" name="max-{{ each }}" step="1" placeholder="Max" value=100000>
+</td>
+</tr>
+{% endfor %}
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table>
+<tr>
+<td colspan="2" align="center">
+Հումք
+</td>
+</tr>
+<tr>
+<td>
+Կաթի ծավալ (լիտր)
+</td>
+<td>
+<input type="number" step="0.001" name="milk_quantity" required>
+</td>
+</tr>
+<tr>
+<td>
+Յուղայնություն (%)
+</td>
+<td>
+<input type="number" step="0.001" name="fat_percentage" required>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<input type="hidden" name="checkboxValidation" required>
+<input type="submit" value="Հաշվարկել">
+</td>
+</tr>
+</table>
+</form>
+<a href="/"><button>Վերադառնալ մենյու</button></a>
+</body>
+</html>
