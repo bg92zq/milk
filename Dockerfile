@@ -46,9 +46,11 @@ COPY . .
 
 USER root
 
-RUN chown -R appuser /products && \
+RUN mkdir -p /products && \
+    chown -R appuser /products && \
     chmod -R 755 /products
-RUN chown -R appuser /work && \
+RUN mkdir -p /work && \
+    chown -R appuser /work && \
     chmod -R 755 /work
 
 # Expose the port that the application listens on.
